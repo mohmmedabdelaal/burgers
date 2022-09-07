@@ -5,6 +5,7 @@ import Product from './products/Product';
 import { css } from '@emotion/css';
 import Nav from './common/Nav';
 import ProductsIndex from './products/productsIndex.js';
+import Products from './products/Products';
 
 const styles = css`
   margin: 50px auto;
@@ -25,6 +26,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Product />}>
             <Route path="/" element={<ProductsIndex />} />
+            <Route path="/:prodId" element={<Products />} />
           </Route>
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<Navigate to="/" />} />
