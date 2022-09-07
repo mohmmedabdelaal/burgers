@@ -47,6 +47,12 @@
       "name": "Wild Water",
       "description": "Spring water, wild and watery.",
       "price": 299
+    },
+    {
+      "id": "pepsi",
+      "name": "Pepsi can",
+      "description": "Pepsi can if you thirsty.",
+      "price": 4
     }
   ]
 }

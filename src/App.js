@@ -3,6 +3,8 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Admin from './admin/Admin';
 import Product from './products/Product';
 import { css } from '@emotion/css';
+import Nav from './common/Nav';
+import ProductsIndex from './products/productsIndex.js';
 
 const styles = css`
   margin: 50px auto;
@@ -19,8 +21,11 @@ const App = () => {
   return (
     <div className={styles}>
       <div className="container">
+        <Nav />
         <Routes>
-          <Route path="/" element={<Product />} />
+          <Route path="/" element={<Product />}>
+            <Route path="/" element={<ProductsIndex />} />
+          </Route>
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
