@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Admin from './admin/Admin';
 import Product from './products/Product';
 import { css } from '@emotion/css';
@@ -9,8 +9,8 @@ const styles = css`
   width: 24rem;
   .container {
     background: #16213e;
-    border: 3px solid #395b64;
-    border-radius: 4px;
+    border: 4px solid #395b64;
+    border-radius: 5px;
     padding: 2rem;
   }
 `;
@@ -22,6 +22,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Product />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </div>
