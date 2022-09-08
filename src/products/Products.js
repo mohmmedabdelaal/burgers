@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { css } from '@emotion/css';
 
-import ProductsIndex from './productsIndex.js';
+import ProductsIndex from './ProductsIndex.js';
 import Product from './Product';
 
 const styles = css`
