@@ -11,6 +11,7 @@ function productsIndex() {
       setProducts(data);
     })();
   }, []);
+
   if (products === null) {
     return <div>Loading....</div>;
   }
