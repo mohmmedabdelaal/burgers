@@ -1,6 +1,9 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { css } from '@emotion/css';
+
+import ProductsIndex from './productsIndex.js';
+import Product from './Product';
 
 const styles = css`
   display: flex;
@@ -16,7 +19,10 @@ function Products() {
   return (
     <div className={styles}>
       <img src="/assets/img/logo.svg" alt="burgers" className="Logo" />
-      <Outlet />
+      <Routes>
+        <Route path="/" element={<ProductsIndex />} />
+        <Route path=":prodId" element={<Product />} />
+      </Routes>
     </div>
   );
 }

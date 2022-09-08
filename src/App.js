@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Navigate,
   Route,
   Routes,
 } from 'react-router-dom';
-import Admin from './admin/Admin';
-import Products from './products/Products';
 import { css } from '@emotion/css';
 import Nav from './common/Nav';
-import ProductsIndex from './products/productsIndex.js';
-import Product from './products/Product';
+import Products from './products/Products';
+import Admin from './admin/Admin';
+import ProtectedRoute from './common/ProtectedRoute';
 
 const styles = css`
   margin: 50px auto;
@@ -24,17 +23,20 @@ const styles = css`
 `;
 
 const App = () => {
+  const [isAuthenticated] = useState(true);
   return (
     <div className={styles}>
       <Router>
         <div className="container">
           <Nav />
           <Routes>
-            <Route path="/" element={<Products />}>
-              <Route path="/" element={<ProductsIndex />} />
-              <Route path=":prodId" element={<Product />} />
-            </Route>
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/*" element={<Products />} />
+            <ProtectedRoute
+              path="/admin"
+              element={<Admin />}
+              redirectTo="/"
+              authenticated={isAuthenticated}
+            />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
