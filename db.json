@@ -13,12 +13,6 @@
       "price": 699
     },
     {
-      "id": "spice-dog",
-      "name": "Spice Dog",
-      "description": "Prepare the spice, it's very nice.",
-      "price": 699
-    },
-    {
       "id": "french-fries",
       "name": "French Fries",
       "description": "That side you've been missing.",
@@ -53,6 +47,12 @@
       "name": "Pepsi can",
       "description": "Pepsi can if you thirsty.",
       "price": 404
+    },
+    {
+      "id": "spice-dog",
+      "name": "Spice Dog",
+      "price": 777,
+      "description": "Prepare the spice, it's very nice."
     }
   ]
 }

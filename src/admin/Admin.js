@@ -34,7 +34,8 @@ function Admin() {
       </div>
       <Routes>
         <Route path="/" element={<ProductsIndex />} />
-        <Route path="/new" element={<ProductEdit isEdited={true} />} />
+        <Route path="/new" element={<ProductEdit isEdited={false} />} />
+        <Route path="/:prodId" element={<ProductEdit isEdited={true} />} />
       </Routes>
     </div>
   );

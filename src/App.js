@@ -10,6 +10,7 @@ import Nav from './common/Nav';
 import Products from './products/Products';
 import Admin from './admin/Admin';
 import ProtectedRoute from './common/ProtectedRoute';
+import Footer from './common/Footer';
 
 const styles = css`
   margin: 50px auto;
@@ -39,6 +40,7 @@ const App = () => {
             />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+          <Footer />
         </div>
       </Router>
     </div>
