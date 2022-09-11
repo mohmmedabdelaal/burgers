@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { css } from '@emotion/css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createProduct, retrieveSingleProduct } from './ProductsService';
+import { css } from '@emotion/css';
+import {
+  createProduct,
+  editProduct,
+  retrieveSingleProduct,
+  deleteProduct,
+} from './ProductsService';
 
 const stylesEdit = css`
   color: #fff;
@@ -36,31 +41,47 @@ const stylesEdit = css`
       cursor: pointer;
       border-radius: 4px;
     }
+    &-delete {
+      background: transparent;
+      color: #e80f88;
+      padding: 10px 40px;
+      border: 2px solid #e80f88;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  }
+  .edit-btns {
+    display: flex;
+    align-items: center;
+    .edit-form-delete {
+      margin-left: auto;
+    }
   }
 `;
 
-function ProductEdit() {
+// {
+//   "id": "spice-dog",
+//   "name": "Spice Dog",
+//   "price": 777,
+//   "description": "Prepare the spice, it's very nice."
+// }
+
+function ProductEdit({ isEdited }) {
   const { prodId } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState(null);
 
-  // if (!isEdited) {
-  //   setForm({
-  //     id: '',
-  //     name: '',
-  //     price: 0,
-  //     description: '',
-  //   });
-  //   return;
-  // }
-
   useEffect(() => {
-    setForm({
-      id: '',
-      name: '',
-      price: 0,
-      description: '',
-    });
+    if (!isEdited) {
+      setForm({
+        id: '',
+        name: '',
+        price: 0,
+        description: '',
+      });
+      return;
+    }
     (async () => {
       try {
         const data = await retrieveSingleProduct(prodId);
@@ -72,15 +93,12 @@ function ProductEdit() {
     })();
   }, [prodId]);
 
-  const updatedForm = ({ name, value }) => {
+  const updateValues = ({ name, value }) => {
     setForm({
       ...form,
       [name]: value,
     });
   };
-  if (form === null) {
-    return <div>Loading.....</div>;
-  }
 
   const handleCreate = async () => {
     try {
@@ -90,45 +108,83 @@ function ProductEdit() {
       console.warn(error);
     }
   };
+  const handleUpdate = async () => {
+    try {
+      await editProduct(form);
+      navigate(`/admin`);
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm(`Are you sure you want to delete ${form.name}?`)) {
+      return;
+    }
+    try {
+      await deleteProduct(form.id);
+      navigate(`/admin`);
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  if (form === null) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <form className={stylesEdit}>
       <input
         type="text"
-        placeholder="ID"
         name="id"
-        onChange={({ target }) => updatedForm(target)}
+        className="edit-form-input"
+        placeholder="ID"
         value={form.id}
-        className="edit-form-input"
-      />{' '}
-      <input
-        type="text"
-        placeholder="Name"
-        name="name"
-        onChange={({ target }) => updatedForm(target)}
-        value={form.name}
-        className="edit-form-input"
+        onChange={({ target }) => updateValues(target)}
       />
       <input
         type="text"
-        placeholder="Price"
-        name="price"
-        onChange={({ target }) =>
-          updatedForm({ name: target.name, value: parseInt(target.value, 10) })
-        }
-        value={form.price}
+        name="name"
         className="edit-form-input"
+        placeholder="Name"
+        value={form.name}
+        onChange={({ target }) => updateValues(target)}
+      />
+      <input
+        type="text"
+        name="price"
+        className="edit-form-input"
+        placeholder="price"
+        value={form.price}
+        onChange={({ target }) =>
+          updateValues({ name: target.name, value: parseInt(target.value, 10) })
+        }
       />
       <textarea
         name="description"
-        id="description"
-        placeholder="Description"
-        value={form.description}
-        onChange={({ target }) => updatedForm(target)}
+        placeholder="description"
         className="edit-form-input edit-form-textarea"
+        value={form.description}
+        onChange={({ target }) => updateValues(target)}
       />
-      <button type="button" className="edit-form-submit" onClick={handleCreate}>
-        Submit
-      </button>
+      {!isEdited && (
+        <button className="edit-form-submit" onClick={handleCreate}>
+          Create
+        </button>
+      )}
+      <div className="edit-btns">
+        {isEdited && (
+          <button className="edit-form-submit" onClick={handleUpdate}>
+            Update
+          </button>
+        )}
+        {isEdited && (
+          <button className="edit-form-delete" onClick={handleDelete}>
+            Delete
+          </button>
+        )}
+      </div>
     </form>
   );
 }

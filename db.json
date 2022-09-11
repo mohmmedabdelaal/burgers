@@ -4,7 +4,7 @@
       "id": "big-cheese",
       "name": "Big Cheese",
       "description": "Large burger, all the cheese.",
-      "price": 749
+      "price": 888
     },
     {
       "id": "the-wedge",
@@ -43,16 +43,10 @@
       "price": 299
     },
     {
-      "id": "pepsi",
-      "name": "Pepsi can",
-      "description": "Pepsi can if you thirsty.",
-      "price": 404
-    },
-    {
       "id": "spice-dog",
       "name": "Spice Dog",
-      "price": 777,
-      "description": "Prepare the spice, it's very nice."
+      "price": 9000,
+      "description": "it's ok to buy this one"
     }
   ]
 }

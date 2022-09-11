@@ -8,7 +8,7 @@ const footerStyles = css`
   color: white;
   background: #1e3161;
   width: 100%;
-  max-width: 400px;
+  max-width: 24rem;
   margin: 0 auto;
   margin-top: 50px;
   border-radius: 5px;
