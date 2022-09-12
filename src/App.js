@@ -37,16 +37,6 @@ const App = () => {
     },
   ]);
   return routes;
-  // <Routes>
-  //           <Route path="/*" element={<Products />} />
-  //           <ProtectedRoute
-  //             path="/admin*"
-  //             element={<Admin />}
-  //             redirectTo="/"
-  //             authenticated={isAuthenticated}
-  //           />
-  //           <Route path="*" element={<Navigate to="/" />} />
-  //         </Routes>
 };
 
 const AppWrapper = () => (
