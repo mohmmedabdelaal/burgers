@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, useRoutes } from 'react-router-dom';
 import { css } from '@emotion/css';
-import Nav from './common/Nav';
-import Products from './products/Products';
 import Admin from './admin/Admin';
-import ProtectedRoute from './common/ProtectedRoute';
+import Nav from './common/Nav';
+import ScrollToTop from './common/ScrollToTop';
+import Products from './products/Products';
+// import ProtectedRoute from './common/ProtectedRoute';
 import Footer from './common/Footer';
 
 const styles = css`
@@ -25,26 +21,45 @@ const styles = css`
 
 const App = () => {
   const [isAuthenticated] = useState(true);
-  return (
-    <div className={styles}>
-      <Router>
-        <div className="container">
-          <Nav />
-          <Routes>
-            <Route path="/*" element={<Products />} />
-            <ProtectedRoute
-              path="/admin*"
-              element={<Admin />}
-              redirectTo="/"
-              authenticated={isAuthenticated}
-            />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
-    </div>
-  );
+  console.log(isAuthenticated);
+  const routes = useRoutes([
+    {
+      path: '/*',
+      element: <Products />,
+    },
+    {
+      path: '/admin*',
+      element: isAuthenticated ? <Admin /> : <Navigate to="/" />,
+    },
+    {
+      path: '*',
+      element: <Navigate to="/" />,
+    },
+  ]);
+  return routes;
+  // <Routes>
+  //           <Route path="/*" element={<Products />} />
+  //           <ProtectedRoute
+  //             path="/admin*"
+  //             element={<Admin />}
+  //             redirectTo="/"
+  //             authenticated={isAuthenticated}
+  //           />
+  //           <Route path="*" element={<Navigate to="/" />} />
+  //         </Routes>
 };
 
-export default App;
+const AppWrapper = () => (
+  <div className={styles}>
+    <Router>
+      <div className="container">
+        <ScrollToTop />
+        <Nav />
+        <App />
+        <Footer />
+      </div>
+    </Router>
+  </div>
+);
+
+export default AppWrapper;

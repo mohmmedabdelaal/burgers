@@ -15,14 +15,13 @@ const styles = css`
     align-items: center;
     span {
       color: #fff;
-      margin-right: 10px;
+      margin-right: 20px;
       display: flex;
       align-items: center;
-      padding: 0.375em 0.75em 0.375em 0.375em;
     }
     label {
       display: flex;
-      width: 8rem;
+      padding-right: 10px;
       cursor: pointer;
       font-weight: 500;
       overflow: hidden;
