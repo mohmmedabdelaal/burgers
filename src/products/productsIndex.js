@@ -33,8 +33,8 @@ const styles = css`
 
 function productsIndex() {
   const { state } = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (state) {
@@ -46,18 +46,17 @@ function productsIndex() {
     (async () => {
       const data = await ListProducts();
       const params = Object.fromEntries([...searchParams]);
-      sortSearchParams(data, params);
+      sortOrderParams(data, params);
     })();
   }, []);
 
-  const sortSearchParams = (data, params) => {
+  const sortOrderParams = (data, params) => {
     if (!Object.keys(params).length) {
       setProducts(data);
     }
 
+    const { sort, order } = params;
     const sorted = [...data].sort((a, b) => {
-      const { sort, order } = params;
-
       switch (order) {
         case 'ascending': {
           return a[sort] > b[sort] ? 1 : -1;
@@ -73,12 +72,12 @@ function productsIndex() {
     setProducts(sorted);
   };
 
-  const updatePrams = (e) => {
+  const updateSort = (e) => {
     const { name, value } = e.target;
-    const paramsSearch = Object.fromEntries([...searchParams]);
-    const newParams = { ...paramsSearch, [name]: value };
+    const currentParams = Object.fromEntries([...searchParams]);
+    const newParams = { ...currentParams, [name]: value };
     setSearchParams(newParams);
-    sortSearchParams(products, newParams);
+    sortOrderParams(products, newParams);
   };
 
   if (products === null) {
@@ -88,56 +87,47 @@ function productsIndex() {
   return (
     <div className={styles}>
       <div className="checkBtn">
-        <span>sort:</span>
-        <label htmlFor="name">
-          <input
-            type="radio"
-            id="name"
-            name="sort"
-            value="name"
-            onChange={updatePrams}
-            defaultChecked={searchParams.get('sort') === 'name'}
-          />
-          <span>Name</span>
-        </label>
-        <label htmlFor="price">
-          <input
-            type="radio"
-            name="sort"
-            value="price"
-            id="price"
-            onChange={updatePrams}
-            defaultChecked={searchParams.get('sort') === 'price'}
-          />
-          <span>Price</span>
-        </label>
+        <span>Sort: </span>
+        <label htmlFor="name">Name</label>
+        <input
+          type="radio"
+          name="sort"
+          id="name"
+          value="name"
+          onChange={updateSort}
+          defaultChecked={searchParams.get('sort') === 'name'}
+        />
+        <label htmlFor="price">Price</label>
+        <input
+          type="radio"
+          name="sort"
+          id="price"
+          value="price"
+          onChange={updateSort}
+          defaultChecked={searchParams.get('sort') === 'price'}
+        />
       </div>
       <div className="checkBtn">
-        <span>Order:</span>
-        <label htmlFor="ascending">
-          <input
-            type="radio"
-            id="ascending"
-            name="order"
-            value="ascending"
-            onChange={updatePrams}
-            defaultChecked={searchParams.get('order') === 'ascending'}
-          />
-          <span>ascending</span>
-        </label>
-        <label htmlFor="descending">
-          <input
-            type="radio"
-            name="order"
-            value="descending"
-            id="descending"
-            onChange={updatePrams}
-            defaultChecked={searchParams.get('order') === 'descending'}
-          />
-          <span>descending</span>
-        </label>
+        <span>Order: </span>
+        <label htmlFor="ascending">ascending</label>
+        <input
+          type="radio"
+          name="order"
+          id="ascending"
+          value="ascending"
+          onChange={updateSort}
+          defaultChecked={searchParams.get('order') === 'ascending'}
+        />
+        <label htmlFor="descending">descending</label>
+        <input
+          type="radio"
+          name="order"
+          id="descending"
+          value="descending"
+          onChange={updateSort}
+          defaultChecked={searchParams.get('order') === 'descending'}
+        />
       </div>
-
       <div className="product-list">
         {products.map((item) => (
           <ProductCard product={item} key={item.id} />
