@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-import ProductsIndex from '../products/ProductsIndex';
-import ProductEdit from '../products/ProductEdit';
+// import ProductsIndex from '../products/ProductsIndex';
+// import ProductEdit from '../products/ProductEdit';
 import { css } from '@emotion/css';
+
+const ProductEdit = lazy(() => import('../products/ProductEdit'));
+const ProductsIndex = lazy(() => import('../products/ProductsIndex'));
 
 const styles = css`
   .admin {

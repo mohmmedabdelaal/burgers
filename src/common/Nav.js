@@ -25,6 +25,9 @@ function Nav() {
       <NavLink to="/admin" activeClassName="active">
         Admin
       </NavLink>
+      <NavLink to="/about" activeClassName="active">
+        About Us
+      </NavLink>
     </nav>
   );
 }

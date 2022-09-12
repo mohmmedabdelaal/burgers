@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Navigate, useRoutes } from 'react-router-dom';
 import { css } from '@emotion/css';
 import Admin from './admin/Admin';
 import Nav from './common/Nav';
+import AboutUs from './common/AboutUs';
 import ScrollToTop from './common/ScrollToTop';
 import Products from './products/Products';
 // import ProtectedRoute from './common/ProtectedRoute';
@@ -30,6 +31,10 @@ const App = () => {
     {
       path: '/admin*',
       element: isAuthenticated ? <Admin /> : <Navigate to="/" />,
+    },
+    {
+      path: '/about',
+      element: <AboutUs />,
     },
     {
       path: '*',

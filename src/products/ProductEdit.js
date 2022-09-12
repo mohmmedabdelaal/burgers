@@ -111,6 +111,7 @@ function ProductEdit({ isEdited }) {
   const handleUpdate = async () => {
     try {
       await editProduct(form);
+      
       navigate(`/admin`);
     } catch (error) {
       console.warn(error);
